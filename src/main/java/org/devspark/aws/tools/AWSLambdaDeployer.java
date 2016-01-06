@@ -1,4 +1,4 @@
-package org.jstorni;
+package org.devspark.aws.tools;
 
 import org.apache.maven.plugins.annotations.Mojo;
 
