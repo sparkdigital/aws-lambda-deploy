@@ -12,22 +12,20 @@
   ],
   "paths": {
 #foreach( $resource in $resources )	
-    "/$resouce.name": {
-#foreach( $method in $resource.getMethods() )    
+    "/$resource.name": {
+#foreach( $method in $resource.methods )    
       "$method.name": {
         "produces": [
-          ## Assuming that only json will be produced	        
-          "application/json"
+          "application/json" ## Assuming that only json will be produced	   
         ],
         "parameters": [
-#foreach ($parameter in $method.getParameters() )
+#foreach ($parameter in $method.parameters )
           {
             "name": "$parameter.name",
-            ## Assuming that parameters will be used in paths only
-            "in": "path",
+            "in": "path",    
             "required": $parameter.required,
-            ## Assuming only string parameters
-            "type": "string"
+            "type": "string"  ## Assuming only string parameters
+            
           }#if( $foreach.hasNext ), #end
 #end        
         ],

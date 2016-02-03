@@ -7,6 +7,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
+	<repositories>
+		<repository>
+			<id>s3-snapshots</id>
+			<url>https://s3-us-west-2.amazonaws.com/jstorni-maven-repository/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	 </repositories>
+
 	<dependencies>
 
 		<dependency>
