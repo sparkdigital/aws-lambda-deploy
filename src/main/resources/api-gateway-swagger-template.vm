@@ -14,7 +14,7 @@
 #foreach( $resource in $resources )	
     "/$resource.name": {
 #foreach( $method in $resource.methods )    
-      "$method.name": {
+      "$method.verb": {
         "produces": [
           "application/json" ## Assuming that only json will be produced	   
         ],
