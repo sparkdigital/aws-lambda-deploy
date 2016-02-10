@@ -1,32 +1,40 @@
-package org.devspark.aws.tools.model.resources;
+package org.devspark.aws.tools.swagger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.devspark.aws.tools.model.resources.EndpointResource;
+import org.devspark.aws.tools.model.resources.EndpointResourceMethod;
+import org.devspark.aws.tools.model.resources.EndpointResponse;
+
 public class EndpointResourceVelocityMapper {
 	
-	public static final Map<String, Object> toVelocityContext(List<EndpointResource> resources) {
+	public static final List<Map<String, Object>> toVelocityContext(List<EndpointResource> resources) {
 
-		Map<String, Object> resourcesMap = new HashMap<String, Object>();
+		List<Map<String, Object>> resourceList = new ArrayList<Map<String,Object>>();
 		for(EndpointResource resource: resources) {
-			resourcesMap.put("/" + resource.getName(), mapEndpointMethods(resource.getMethods()));
+			Map<String, Object> resourcesMap = new HashMap<String, Object>();
+			resourcesMap.put("name", resource.getName());
+			resourcesMap.put("methods", mapEndpointMethods(resource.getMethods()));
+			resourceList.add(resourcesMap);
 		}
-		return resourcesMap;
+		return resourceList;
 		
 	}
 
-	private static Map<String, Object> mapEndpointMethods(List<EndpointResourceMethod> methods) {
-		Map<String, Object> methodsMap = new HashMap<String, Object>();
+	private static List<Object> mapEndpointMethods(List<EndpointResourceMethod> methods) {
+		List<Object> methodsList = new ArrayList<Object>();
 		for(EndpointResourceMethod method: methods) {
 			Map<String, Object> methodDetailsMap = new HashMap<String, Object>();
 			methodDetailsMap.put("produces", method.getProduces());
 			methodDetailsMap.put("parameters", method.getParameters());
 			methodDetailsMap.put("responses", mapEndpointResponses(method.getResponses()));
-			methodsMap.put(method.getMethod(), methodDetailsMap);
+			methodDetailsMap.put("verb", method.getVerb());
+			methodsList.add(methodDetailsMap);
 		}
-		return methodsMap;
+		return methodsList;
 	}
 
 	private static List<Map<String, Object>> mapEndpointResponses(List<EndpointResponse> responses) {

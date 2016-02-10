@@ -39,7 +39,7 @@ public class VelocityContextMock {
 
 		for (int i = 0; i < 5; i++) {
 			Map<String, Object> methodMap = new HashMap<String, Object>();
-			methodMap.put("name", "methodName" + i);
+			methodMap.put("verb", "verb" + i);
 			methodMap.put("parameters", setMockParameters());
 			methodsList.add(methodMap);
 		}

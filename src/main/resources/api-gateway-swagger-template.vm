@@ -11,37 +11,37 @@
     "https"
   ],
   "paths": {
-#foreach( $resource in $resources )	
-    "/$resource.name": {
-#foreach( $method in $resource.methods )    
-      "$method.name": {
-        "produces": [
-          "application/json" ## Assuming that only json will be produced	   
-        ],
-        "parameters": [
-#foreach ($parameter in $method.parameters )
-          {
-            "name": "$parameter.name",
-            "in": "path",    
-            "required": $parameter.required,
-            "type": "string"  ## Assuming only string parameters
-            
-          }#if( $foreach.hasNext ), #end
-#end        
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {}
-          }
-        }
-      }#if( $foreach.hasNext ), #end
-#end
-#end      
-    }
+		#foreach( $resource in $resources )	
+		    "/$resource.name": {
+				#foreach( $method in $resource.methods )    
+				      "$method.verb": {
+				        "produces": [
+				          "application/json" ## Assuming that only json will be produced	   
+				        ],
+				        "parameters": [
+							#foreach ($parameter in $method.parameters )
+							          {
+							            "name": "$parameter.name",
+							            "in": "path",    
+							            "required": $parameter.required,
+							            "type": "string"  ## Assuming only string parameters
+							            
+							          }#if( $foreach.hasNext ), #end
+							#end        
+				        ],
+				        "responses": {
+				          "200": {
+				            "description": "200 response",
+				            "schema": {
+				              "$ref": "#/definitions/Empty"
+				            },
+				            "headers": {}
+				          }
+				        }
+				      }#if( $foreach.hasNext ), #end
+				#end
+			}#if( $foreach.hasNext ), #end
+		#end      
   },
   "definitions": {
     "Empty": {
