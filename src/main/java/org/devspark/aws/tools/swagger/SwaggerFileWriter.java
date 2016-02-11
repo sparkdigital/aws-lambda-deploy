@@ -6,6 +6,6 @@ import org.devspark.aws.tools.model.resources.EndpointResource;
 
 public interface SwaggerFileWriter {
 
-	public void createSwaggerFile(List<EndpointResource> resources);
+	public void createSwaggerFile(List<EndpointResource> resources, String apiName);
 
 }

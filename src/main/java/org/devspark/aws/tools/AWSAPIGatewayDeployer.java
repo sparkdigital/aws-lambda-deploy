@@ -15,6 +15,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.devspark.aws.lambdasupport.endpoint.annotations.apigateway.ApiGateway;
 import org.devspark.aws.lambdasupport.endpoint.annotations.apigateway.Resource;
 import org.devspark.aws.lambdasupport.endpoint.annotations.apigateway.ResourceMethod;
 import org.devspark.aws.tools.model.resources.EndpointResource;
@@ -50,11 +51,22 @@ public class AWSAPIGatewayDeployer extends AbstractMojo {
 		Set<Class<?>> resources = reflections
 				.getTypesAnnotatedWith(Resource.class);
 		
+		Set<Class<?>> apis = reflections
+				.getTypesAnnotatedWith(ApiGateway.class);
+		
 		Map<String, EndpointResource> endpointResources = getEndpointResources(resources);
-		fileWriter.createSwaggerFile(new ArrayList<EndpointResource>(endpointResources.values()));
+		String apiName = getApiName(apis);
+		fileWriter.createSwaggerFile(new ArrayList<EndpointResource>(endpointResources.values()), apiName);
 
 	}
 	
+	private String getApiName(Set<Class<?>> apis) {
+		if (apis.size() != 1) {
+			getLog().warn("Invalid number of @ApiGateway found.");
+		}
+		return apis.iterator().next().getAnnotationsByType(ApiGateway.class)[0].name();
+	}
+
 	@SuppressWarnings("unchecked")
 	private Map<String, EndpointResource> getEndpointResources(Set<Class<?>> resources) {
 		Map<String, EndpointResource> endpointResources = new HashMap<String, EndpointResource>();

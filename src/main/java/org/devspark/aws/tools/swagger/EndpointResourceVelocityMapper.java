@@ -31,7 +31,7 @@ public class EndpointResourceVelocityMapper {
 			methodDetailsMap.put("produces", method.getProduces());
 			methodDetailsMap.put("parameters", method.getParameters());
 			methodDetailsMap.put("responses", mapEndpointResponses(method.getResponses()));
-			methodDetailsMap.put("verb", method.getVerb());
+			methodDetailsMap.put("verb", method.getVerb().toLowerCase());
 			methodsList.add(methodDetailsMap);
 		}
 		return methodsList;

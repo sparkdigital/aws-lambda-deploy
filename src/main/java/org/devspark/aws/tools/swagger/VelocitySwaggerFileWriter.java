@@ -19,7 +19,7 @@ public class VelocitySwaggerFileWriter implements SwaggerFileWriter{
 	
 	@SuppressWarnings("resource")
 	@Override
-	public void createSwaggerFile(List<EndpointResource> resources) {
+	public void createSwaggerFile(List<EndpointResource> resources, String apiName) {
 		
 		VelocityEngine velocityEngine = new VelocityEngine();
 		velocityEngine.init();
@@ -30,9 +30,9 @@ public class VelocitySwaggerFileWriter implements SwaggerFileWriter{
 
 		//TODO: get info from project
 		context.put("createdOn", new Date());
-		context.put("apiName", "ThisIsTheAPIName");
-		context.put("host", "mockHost");
-		context.put("stage", "This/is/the/basepath");
+		context.put("apiName", apiName);
+		context.put("host", "c3684fyvyi.execute-api.us-west-2.amazonaws.com");
+		context.put("stage", "/QA");
 
 		context.put("resources", EndpointResourceVelocityMapper.toVelocityContext(resources));
 
@@ -47,8 +47,11 @@ public class VelocitySwaggerFileWriter implements SwaggerFileWriter{
 	        FileWriter fileWriter = new FileWriter(file);
 	        String swaggerString = writer.toString();
 			fileWriter.write(swaggerString);
-			//TODO: write swagger file into a file.
+			fileWriter.flush();
+			fileWriter.close();
 			System.out.println(swaggerString);
+			writer.flush();
+		    writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
